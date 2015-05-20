@@ -7,10 +7,12 @@ require 'blergers/importer'
 
 module Blergers
   class Post < ActiveRecord::Base
+    has_many :post_tags
     has_many :tags, through: :post_tags
   end
 
   class Tag < ActiveRecord::Base
+    has_many :post_tags
     has_many :posts, through: :post_tags
   end
 
