@@ -9,11 +9,31 @@ module Blergers
   class Post < ActiveRecord::Base
     has_many :post_tags
     has_many :tags, through: :post_tags
+
+
+    def self.page(n)
+
+    Post.order(date: :desc).limit(10).offset((n - 1)*10)
+    #binding.pry WHY DOES BINDING.PRY NOT EXECUTE WHEN PLACED HERE?
+    end
+    #binding.pry
   end
 
   class Tag < ActiveRecord::Base
     has_many :post_tags
     has_many :posts, through: :post_tags
+
+    def self.top_tags
+  
+    Tag.order(id: :desc).each do |t| 
+        #puts player.name + " " + player.score.to_s
+        puts "#{t.name} -> #{t.id}"
+    end
+
+    end
+
+
+    binding.pry
   end
 
   class PostTag < ActiveRecord::Base
@@ -21,6 +41,9 @@ module Blergers
     belongs_to :tag
   end
 end
+
+
+
 
 def add_post!(post)
   puts "Importing post: #{post[:title]}"
@@ -43,4 +66,4 @@ def run!
   end
 end
 
-binding.pry
+
